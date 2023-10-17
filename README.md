@@ -34,3 +34,33 @@ Diseño responsive.
 Te recomendamos que reserves dos horas para realizar la prueba.
 Nos gustaría que la prueba la realizarás en Angular pero puedes usar librerías, patrones de diseño o cualquier cosa que decidas. Siéntete cómodo usando las herramientas con las que estás acostumbrado a trabajar.
 Envíanos el resultado de la prueba a través de tu repositorio personal (Github, Gitlab, Bitbucket...).
+
+---------------------------------------------------------------
+
+# DOCUMENTATION
+https://punkapi.com/documentation/v2
+
+### Authentication
+NONE
+
+### Parameters: 
+All parameters are optional as a query string and can be chained together. 
+Without a value it will return a 400 error.
+
+### Pagination
+Multiple items results will be limited to 25 by default.
+?page paramater to access the rest of pages.
+?per_page changes limit
+
+### Get Beers endpoint
+URL: https://api.punkapi.com/v2/beers
+
+Just using string params. Not counting Ids filtering.
+
+|PARAM|TYPE|DETAILS|
+|:---:|:--:|:-----:|
+|beer_name|string|All beers by name|
+|yeast|string|All beers by yeast|
+|hops|string|All beers by hops|
+|malt|string|All beers by malt|
+|food|string|All beers by food|
