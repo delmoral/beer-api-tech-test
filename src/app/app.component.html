@@ -1,15 +1,27 @@
-<main style="background-color: #212121; color: white; padding: 20px;">
-  <mat-form-field class="example-form-field">
-    <mat-label>Beer filter</mat-label>
-    <input matInput type="text" [(ngModel)]="query">
-    <button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
+<main class="wrapper">
+  <section>
+    <mat-form-field>
+      <mat-label>Beer filter</mat-label>
+      <input matInput type="text" [(ngModel)]="query" (keyup)="filterBeers()">
+      <button *ngIf="query" matSuffix mat-icon-button aria-label="Clear" (click)="query=''; filterBeers()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
 
-  <ng-container *ngFor="let beer of beersList">
-    <p>
-      {{beer|json}}
-    </p>
-  </ng-container>
+    <ng-container *ngFor="let beer of beersList">
+      <div style="padding-bottom: 10px;">
+        Name: {{ beer.name }}<br>
+        Yeast: {{ beer.ingredients.yeast }}<br>
+        Hops:<br>
+        <span *ngFor="let hop of beer.ingredients.hops" style="white-space: normal">
+          {{ hop |json }}
+        </span><br>
+        Malt:<br>
+        <span *ngFor="let malt of beer.ingredients.malt" style="white-space: normal">
+          {{ malt |json }}
+        </span><br>
+        Food: {{ beer.food_pairing }}<br>
+      </div>
+    </ng-container>
+  </section>
 </main>

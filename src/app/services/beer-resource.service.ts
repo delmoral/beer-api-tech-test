@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Beer } from '../models/beer.model';
+import { zip, Observable } from 'rxjs';
+import { map } from 'rxjs/operators'
+import { BEER_FILTER_PARAMS, BEER_URL } from '../constants/beer.constants';
 
 @Injectable({ providedIn: 'root' })
 export class BeerResourceService {
-  BEER_URL = 'https://api.punkapi.com/v2/beers';
 
   constructor(private http: HttpClient) { }
 
-  queryBeers(beerName?: string, yeast?: string, hops?: string, malt?: string, food?: string) {
-    return this.http.get(this.BEER_URL)
+  genericSearchBeers(query?: string) {
+    if (query) {
+      return zip(this.buildRequests(query)).pipe(map(x => x[0].concat(x[1])))
+    } else {
+      return this.http.get<Beer[]>(BEER_URL)
+    }
+  }
+
+  buildRequests(query: string) {
+    let requests: Observable<Beer[]>[] = []
+    BEER_FILTER_PARAMS.forEach(param => {
+      let params = new HttpParams();
+      params = params.append(param, query);
+      requests.push(this.http.get<Beer[]>(BEER_URL, { params }))
+    });
+    return requests
   }
 }
-
-
-/**
-|beer_name|string|All beers by name|
-|yeast|string|All beers by yeast|
-|hops|string|All beers by hops|
-|malt|string|All beers by malt|
-|food|string|All beers by food|
- */
